@@ -1,9 +1,8 @@
 import { Request, Response } from "express"
 const {User} = require('../models/models.ts')
-const uuid = require('uuid')
+import { IUser } from "../models/types"
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const path = require('path')
 
 const createJwt = (id: any, name: any, avatar: any) => {
     return jwt.sign({id, name, avatar}, process.env.JWT_HASH, {expiresIn: '240h'})
@@ -17,13 +16,13 @@ const UserController = {
             return res.json({message: 'Введите данные'})
         }
 
-        const userBd = await User.findOne({where:{name}})
+        const userBd: IUser = await User.findOne({where:{name}})
         if (userBd) {
             return res.json({message: 'Логин занят'})
         }
 
         const mdPassword = await bcrypt.hash(password, 5)
-        const user = await User.create({name, password: mdPassword, avatar: img})
+        const user: IUser = await User.create({name, password: mdPassword, avatar: img})
         const token = createJwt(user.id, user.name, user.avatar)
         return res.json({token})
     },
@@ -34,7 +33,7 @@ const UserController = {
             return res.json({message: 'Введите данные'})
         }
 
-        const userBd = await User.findOne({where:{name}})
+        const userBd: IUser = await User.findOne({where:{name}})
         if (!userBd) {
             return res.json({message: 'Пользователь не найден'})
         }
@@ -60,7 +59,7 @@ const UserController = {
             }
 
             const decodeToken = jwt.verify(reqToken, process.env.JWT_HASH)
-            const user = decodeToken
+            const user: IUser = decodeToken
 
             const token = createJwt(user.id, user.name, user.avatar)
 

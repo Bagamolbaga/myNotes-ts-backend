@@ -1,23 +1,24 @@
 import { Request, Response } from "express"
 const {Note} = require('../models/models')
+import { INote } from "../models/types"
 
 const NoteController = {
     create: async (req: Request, res: Response) => {
         const {title, text, tags, group_id, user_id} = req.body
-        const note = await Note.create({title, text, tags, user_id, group_id})
+        const note: INote = await Note.create({title, text, tags, user_id, group_id})
         return res.json(note)
     },
 
     get: async (req: Request, res: Response) => {
         const {user_id} = req.query
-        const notes = await Note.findAll({where: {user_id}})
+        const notes: INote[] = await Note.findAll({where: {user_id}})
         return res.json(notes)
     },
 
     edit: async (req: Request, res: Response) => {
         const {note_id, newTitle, newText, newTags, toFixed, toUnFixed} = req.body
 
-        let updatedNote
+        let updatedNote: INote
         if (toFixed) {
             updatedNote = await Note.update(
                 {
