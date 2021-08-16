@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize'
 
-const env = process.env.NODE_ENV || 'development'
+const env: string = process.env.NODE_ENV || 'development'
 
 const devUrl: string = `postgres://postgres:lehabaga@localhost:5432/my_notes`
 

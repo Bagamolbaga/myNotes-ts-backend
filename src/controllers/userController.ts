@@ -4,7 +4,7 @@ import { IUser } from "../models/types"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const createJwt = (id: number, name: string, avatar: string) => {
+const createJwt = (id: number, name: string, avatar: string) : string => {
     return jwt.sign({id, name, avatar}, process.env.JWT_HASH!, {expiresIn: '240h'})
 }
 

@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { Note, NoteInstance } from "../models/models"
+import { Note } from "../models/models"
 import { INote } from "../models/types"
 
 export const NoteController = {
