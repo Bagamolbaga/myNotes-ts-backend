@@ -1,8 +1,8 @@
 import { Request, Response } from "express"
-const {Note} = require('../models/models')
+import { Note, NoteInstance } from "../models/models"
 import { INote } from "../models/types"
 
-const NoteController = {
+export const NoteController = {
     create: async (req: Request, res: Response) => {
         const {title, text, tags, group_id, user_id} = req.body
         const note: INote = await Note.create({title, text, tags, user_id, group_id})
@@ -18,7 +18,7 @@ const NoteController = {
     edit: async (req: Request, res: Response) => {
         const {note_id, newTitle, newText, newTags, toFixed, toUnFixed} = req.body
 
-        let updatedNote: INote
+        let updatedNote
         if (toFixed) {
             updatedNote = await Note.update(
                 {
@@ -58,5 +58,3 @@ const NoteController = {
         return res.json(deleteNode)
     }
 }
-
-module.exports = NoteController

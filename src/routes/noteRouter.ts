@@ -1,12 +1,12 @@
 import { Router } from "express"
+import { NoteController } from "../controllers/noteController"
 
 const router: Router = Router()
 
-const noteController = require('../controllers/noteController')
 
-router.post('/', noteController.create)
-router.get('/', noteController.get)
-router.put('/', noteController.edit)
-router.delete('/', noteController.delete)
+router.post('/', NoteController.create)
+router.get('/', NoteController.get)
+router.put('/', NoteController.edit)
+router.delete('/', NoteController.delete)
 
-module.exports = router
+export default router

@@ -2,13 +2,14 @@
 import { Router } from "express"
 const router: Router = Router()
 
-const userRouter = require('./userRouter')
-const groupRouter = require('./groupRouter')
-const noteRouter = require('./noteRouter')
+import userRouter from './userRouter'
+import groupRouter from './groupRouter'
+import noteRouter from './noteRouter'
+
 
 
 router.use('/user', userRouter)
 router.use('/group', groupRouter)
 router.use('/note', noteRouter)
 
-module.exports = router
+export default router

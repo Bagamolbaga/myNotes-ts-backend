@@ -1,14 +1,14 @@
 import { Request, Response } from "express"
-const {User} = require('../models/models.ts')
+import { User } from '../models/models'
 import { IUser } from "../models/types"
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
-const createJwt = (id: any, name: any, avatar: any) => {
-    return jwt.sign({id, name, avatar}, process.env.JWT_HASH, {expiresIn: '240h'})
+const createJwt = (id: number, name: string, avatar: string) => {
+    return jwt.sign({id, name, avatar}, process.env.JWT_HASH!, {expiresIn: '240h'})
 }
 
-const UserController = {
+export const UserController = {
     registration: async (req: Request, res: Response) => {
         const {name, password, img} = req.body
 
@@ -16,7 +16,7 @@ const UserController = {
             return res.json({message: 'Введите данные'})
         }
 
-        const userBd: IUser = await User.findOne({where:{name}})
+        const userBd = await User.findOne({where:{name}})
         if (userBd) {
             return res.json({message: 'Логин занят'})
         }
@@ -33,7 +33,7 @@ const UserController = {
             return res.json({message: 'Введите данные'})
         }
 
-        const userBd: IUser = await User.findOne({where:{name}})
+        const userBd: IUser | null = await User.findOne({where:{name}})
         if (!userBd) {
             return res.json({message: 'Пользователь не найден'})
         }
@@ -58,10 +58,9 @@ const UserController = {
                 return res.json({message: 'Не авторизован'})
             }
 
-            const decodeToken = jwt.verify(reqToken, process.env.JWT_HASH)
-            const user: IUser = decodeToken
+            const decodeToken: any = jwt.verify(reqToken, process.env.JWT_HASH!)
 
-            const token = createJwt(user.id, user.name, user.avatar)
+            const token = createJwt(decodeToken.id, decodeToken.name, decodeToken.avatar)
 
             res.json({token})
             
@@ -70,5 +69,3 @@ const UserController = {
         }
     }
 }
-
-module.exports = UserController

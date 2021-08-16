@@ -1,11 +1,11 @@
 import dotenv from 'dotenv'
 dotenv.config()
-//const express = require('express')
 import express, { Express } from "express"
-const sequelize = require('./db')
+//const sequelize = require('./db')
+import sequelize from './db'
 const models = require('./models/models')
 const cors = require('cors')
-const router = require('./routes/index')
+import router from './routes/index'
 
 
 const fileUpload = require('express-fileupload')

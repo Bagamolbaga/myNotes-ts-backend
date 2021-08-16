@@ -1,10 +1,10 @@
 import { Router } from "express"
+import { GroupController } from "../controllers/groupController"
 
 const router: Router = Router()
 
-const groupController = require('../controllers/groupController')
 
-router.post('/', groupController.create)
-router.get('/', groupController.get)
+router.post('/', GroupController.create)
+router.get('/', GroupController.get)
 
-module.exports = router
+export default router

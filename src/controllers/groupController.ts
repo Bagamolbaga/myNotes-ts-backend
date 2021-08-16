@@ -1,8 +1,8 @@
 import { Request, Response } from "express"
-const {Group} = require('../models/models')
+import { Group } from "../models/models"
 import { IGroup } from "../models/types"
 
-const GroupController = {
+export const GroupController = {
     create: async (req: Request, res: Response) => {
         const {title, user_id} = req.body
         const group: IGroup = await Group.create({title, user_id})
@@ -15,5 +15,3 @@ const GroupController = {
         return res.json(group)
     }
 }
-
-module.exports = GroupController
