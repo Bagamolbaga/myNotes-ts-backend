@@ -4,6 +4,7 @@ import { Model, DataTypes } from 'sequelize'
 interface UserInstance extends Model {
     id: number
     name: string
+    email: string
     password: string
     avatar: string
 }
@@ -31,6 +32,7 @@ interface GroupInstance extends Model {
 export const User = sequelize.define<UserInstance>('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true},
+    email: {type: DataTypes.STRING, unique: true},
     password: {type: DataTypes.STRING, allowNull: false},
     avatar: {type: DataTypes.STRING}
 })
