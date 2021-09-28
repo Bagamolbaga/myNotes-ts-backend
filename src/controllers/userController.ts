@@ -83,6 +83,10 @@ export const UserController = {
     sendEmailresetPassword: async (req: Request, res: Response) => {
         const { nameOrEmail } = req.body
         
+        if (!nameOrEmail) {
+            return res.json({message: 'Введите почту'})
+        }
+
         const userBd: IUser | null = await User.findOne({where:{[Op.or]: [{name: nameOrEmail}, {email: nameOrEmail}]}})
         if (!userBd) {
             return res.json({message: 'Пользователь не найден'})
@@ -92,7 +96,7 @@ export const UserController = {
         
         const data = {
             from: 'mynotes.mynotes@yandex.ru',
-            to: 'mynotes.mynotes@mail.ru, gdetotam020@gmail.com',
+            to: userBd.email,
             subject: 'MyNotes reset password',
             html: `<body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
             <!--100% body table-->
