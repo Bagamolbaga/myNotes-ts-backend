@@ -155,7 +155,7 @@ export const UserController = {
         </body>`
         }
 
-        transporter.sendMail(data, (err, dataRes) => {
+        transporter.sendMail(data, (err: any, dataRes: any) => {
             if (err) {
                 return res.status(400).json({message: err})
             }
