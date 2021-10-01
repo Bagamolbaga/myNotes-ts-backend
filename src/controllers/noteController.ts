@@ -54,7 +54,7 @@ export const NoteController = {
 
     delete: async (req: Request, res: Response) => {
         const { note_id } = req.query
-        const deleteNode = await Note.destroy({where: {id: note_id}})
-        return res.json(deleteNode)
+        const deleteNote = await Note.destroy({where: {id: note_id}})
+        return res.json(deleteNote)
     }
 }
