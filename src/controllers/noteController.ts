@@ -16,7 +16,7 @@ export const NoteController = {
     },
 
     edit: async (req: Request, res: Response) => {
-        const {note_id, newTitle, newText, newTags, toFixed, toUnFixed} = req.body
+        const {note_id, newTitle, newText, newTags, newGroupId, toFixed, toUnFixed} = req.body
 
         let updatedNote
         if (toFixed) {
@@ -42,7 +42,8 @@ export const NoteController = {
                 {
                     title: newTitle,
                     text: newText,
-                    tags: newTags
+                    tags: newTags,
+                    group_id: newGroupId
                 },
                 {
                     where: {id: note_id}

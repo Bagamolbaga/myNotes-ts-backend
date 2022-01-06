@@ -35,6 +35,10 @@ export const socket = {
             socket.on('newGroup', (group: IGroup) => {
                 socket.to(room).emit('newGroup', group)
             })
+
+            socket.on('deleteGroup', (id: number) => {
+                socket.to(room).emit('deleteGroup', id)
+            })
         })
     }
 }

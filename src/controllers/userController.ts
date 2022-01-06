@@ -59,10 +59,6 @@ export const UserController = {
     },
 
     auth: async (req: Request, res: Response) => {
-        if (req.method === 'OPTIONS'){
-
-        }
-
         try {
             const reqToken = req.headers.authorization?.split(' ')[1]
             if (!reqToken) {
@@ -76,7 +72,7 @@ export const UserController = {
             res.json({token})
             
         } catch (e) {
-            res.json({message: 'Не авторизован2'})
+            res.json({message: 'Не авторизован'})
         }
     },
 

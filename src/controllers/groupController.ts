@@ -4,8 +4,8 @@ import { IGroup } from "../models/types"
 
 export const GroupController = {
     create: async (req: Request, res: Response) => {
-        const {title, user_id} = req.body
-        const group: IGroup = await Group.create({title, user_id})
+        const {title, color, user_id} = req.body
+        const group: IGroup = await Group.create({title, color, user_id})
         return res.json(group)
     },
 
@@ -13,5 +13,11 @@ export const GroupController = {
         const {user_id} = req.query
         const group: IGroup[] = await Group.findAll({where: {user_id}})
         return res.json(group)
+    },
+
+    delete: async (req:Request, res: Response) => {
+        const { group_id } = req.query
+        const deleteGroup = await Group.destroy({where: {id: group_id}})
+        return res.json(deleteGroup)
     }
 }

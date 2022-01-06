@@ -8,5 +8,6 @@ router.use(isAuth)
 
 router.post('/', GroupController.create)
 router.get('/', GroupController.get)
+router.delete('/', GroupController.delete)
 
 export default router

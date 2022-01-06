@@ -24,6 +24,7 @@ export interface NoteInstance extends Model {
 interface GroupInstance extends Model {
     id: number
     title: string
+    color: string
     user_id: number
     createdAt: string
     updatedAt: string
@@ -50,5 +51,6 @@ export const Note = sequelize.define<NoteInstance>('note', {
 export const Group = sequelize.define<GroupInstance>('group', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     title: {type: DataTypes.STRING, allowNull: false},
+    color: {type: DataTypes.STRING, allowNull: false},
     user_id: {type: DataTypes.INTEGER, allowNull: false},
 })
