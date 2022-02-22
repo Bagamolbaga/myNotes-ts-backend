@@ -17,6 +17,7 @@ export interface IGroup {
 
 export interface INote {
     id: number
+    headerImg: string
     title: string
     text: string
     user_id: number

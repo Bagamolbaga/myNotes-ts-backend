@@ -4,8 +4,8 @@ import { INote } from "../models/types"
 
 export const NoteController = {
     create: async (req: Request, res: Response) => {
-        const {title, text, tags, group_id, user_id} = req.body
-        const note: INote = await Note.create({title, text, tags, user_id, group_id})
+        const {headerImg, title, text, tags, group_id, user_id} = req.body
+        const note: INote = await Note.create({headerImg, title, text, tags, user_id, group_id})
         return res.json(note)
     },
 
@@ -16,7 +16,7 @@ export const NoteController = {
     },
 
     edit: async (req: Request, res: Response) => {
-        const {note_id, newTitle, newText, newTags, newGroupId, toFixed, toUnFixed} = req.body
+        const {headerImg, note_id, newTitle, newText, newTags, newGroupId, toFixed, toUnFixed} = req.body
 
         let updatedNote
         if (toFixed) {
@@ -40,6 +40,7 @@ export const NoteController = {
         } else {
             updatedNote = await Note.update(
                 {
+                    headerImg,
                     title: newTitle,
                     text: newText,
                     tags: newTags,
