@@ -2,7 +2,8 @@ import { Sequelize } from 'sequelize'
 
 const env: string = process.env.NODE_ENV || 'development'
 
-const devUrl: string = `postgres://postgres:lehabaga@localhost:5432/my_notes`
+// const devUrl: string = `postgres://postgres:lehabaga@localhost:5432/my_notes`   for old PC
+const devUrl: string = `postgres://postgres:lehabaga@localhost:5432/mynotes`      // for new PC
 
 const prodUrl: string = process.env.DATABASE_URL || ''
 
