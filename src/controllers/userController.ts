@@ -177,5 +177,27 @@ export const UserController = {
         )
 
         return res.status(200).json(updatedUser)
+    },
+
+    googleAuth: async (req:Request, res: Response) => {
+        const { name, email, avatar} = req.body
+
+        const mdPassword = await bcrypt.hash(email, 5)
+        
+        const user: [IUser, boolean] = await User.findOrCreate({
+            where: { email },
+            defaults: { name, email, avatar, password: mdPassword }
+        })
+
+        if (user[1]) {
+            console.log('User[1] > true');
+            const token = createJwt(user[0].id, user[0].name, user[0].email, user[0].avatar)
+            return res.json({token})
+        } else {
+            console.log('User[1] > false');
+            const token = createJwt(user[0].id, user[0].name, user[0].email, user[0].avatar)
+            return res.json({token})
+        }
+        
     }
 }

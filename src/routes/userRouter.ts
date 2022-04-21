@@ -8,5 +8,6 @@ router.post('/login', UserController.login)
 router.get('/auth', UserController.auth)
 router.post('/send-email-reset-password', UserController.sendEmailresetPassword)
 router.post('/reset-password', UserController.resetPassword)
+router.post('/google-auth', UserController.googleAuth)
 
 export default router
