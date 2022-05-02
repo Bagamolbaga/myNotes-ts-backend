@@ -5,6 +5,7 @@ import { IUser } from "../models/types"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { transporter } from '../nodemailer'
+import SMTPTransport from "nodemailer/lib/smtp-transport"
 
 const createJwt = (id: number, name: string, email: string, avatar: string) : string => {
     return jwt.sign({id, name, email, avatar}, process.env.JWT_HASH!, {expiresIn: '240h'})
@@ -41,17 +42,17 @@ export const UserController = {
     login: async (req: Request, res: Response) => {
         const {nameOrEmail, password} = req.body
         if (!nameOrEmail || !password) {
-            return res.json({message: 'Введите данные'})
+            return res.json({message: 'Enter data'})
         }
 
         const userBd: IUser | null = await User.findOne({where:{[Op.or]: [{name: nameOrEmail}, {email: nameOrEmail}]}})
         if (!userBd) {
-            return res.json({message: 'Пользователь не найден'})
+            return res.json({message: 'User not found'})
         }
 
         const checkPassword = bcrypt.compareSync(password, userBd.password)
         if(!checkPassword) {
-            return res.json({message: 'Неверный логин или пароль'})
+            return res.json({message: 'Uncorrect login or password'})
         }
 
         const token = createJwt(userBd.id, userBd.name, userBd.email, userBd.avatar)
@@ -62,7 +63,7 @@ export const UserController = {
         try {
             const reqToken = req.headers.authorization?.split(' ')[1]
             if (!reqToken) {
-                return res.json({message: 'Не авторизован'})
+                return res.json({message: 'Unauthorized'})
             }
 
             const decodeToken: any = jwt.verify(reqToken, process.env.JWT_HASH!)
@@ -72,7 +73,7 @@ export const UserController = {
             res.json({token})
             
         } catch (e) {
-            res.json({message: 'Не авторизован'})
+            res.json({message: 'Unauthorized'})
         }
     },
 
@@ -151,7 +152,7 @@ export const UserController = {
         </body>`
         }
 
-        transporter.sendMail(data, (err: any, dataRes: any) => {
+        transporter.sendMail(data, (err: any, dataRes: SMTPTransport.SentMessageInfo) => {
             if (err) {
                 return res.status(400).json({message: err})
             }
