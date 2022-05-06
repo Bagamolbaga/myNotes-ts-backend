@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { Op } from 'sequelize'
-import { User } from '../models/models'
-import { IUser } from "../models/types"
+import { User, Group } from '../models/models'
+import { IUser, IGroup } from "../models/types"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { transporter } from '../nodemailer'
@@ -34,7 +34,16 @@ export const UserController = {
         }
 
         const mdPassword = await bcrypt.hash(password, 5)
+
         const user: IUser = await User.create({name, email, password: mdPassword, avatar: img})
+
+        const defaultGroup = {
+            title: 'Other',
+            color: '#ffffff',
+            user_id: user.id
+        }
+        const group = await Group.create(defaultGroup)
+
         const token = createJwt(user.id, user.name, user.email, user.avatar)
         return res.json({token})
     },
@@ -191,11 +200,16 @@ export const UserController = {
         })
 
         if (user[1]) {
-            console.log('User[1] > true');
+            const defaultGroup = {
+                title: 'Other',
+                color: '#ffffff',
+                user_id: user[0].id
+            }
+            const group = await Group.create(defaultGroup)
+            
             const token = createJwt(user[0].id, user[0].name, user[0].email, user[0].avatar)
             return res.json({token})
         } else {
-            console.log('User[1] > false');
             const token = createJwt(user[0].id, user[0].name, user[0].email, user[0].avatar)
             return res.json({token})
         }
