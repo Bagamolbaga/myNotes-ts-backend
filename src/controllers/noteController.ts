@@ -16,7 +16,7 @@ export const NoteController = {
     },
 
     edit: async (req: Request, res: Response) => {
-        const {headerImg, note_id, newTitle, newText, newTags, newGroupId, toFixed, toUnFixed} = req.body
+        const {newHeaderImg, note_id, newTitle, newText, newTags, newGroupId, toFixed, toUnFixed} = req.body
 
         let updatedNote
         if (toFixed) {
@@ -40,7 +40,7 @@ export const NoteController = {
         } else {
             updatedNote = await Note.update(
                 {
-                    headerImg,
+                    headerImg: newHeaderImg,
                     title: newTitle,
                     text: newText,
                     tags: newTags,
