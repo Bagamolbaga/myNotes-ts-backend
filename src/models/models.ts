@@ -41,9 +41,9 @@ export const User = sequelize.define<UserInstance>('user', {
 
 export const Note = sequelize.define<NoteInstance>('note', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    headerImg: {type: DataTypes.STRING, allowNull: true},
+    headerImg: {type: DataTypes.STRING(500), allowNull: true},
     title: {type: DataTypes.STRING, allowNull: false},
-    text: {type: DataTypes.STRING, allowNull: false},
+    text: {type: DataTypes.STRING(5000), allowNull: false},
     user_id: {type: DataTypes.INTEGER, allowNull: false},
     group_id: {type: DataTypes.INTEGER, allowNull: false},
     fixed: {type: DataTypes.BOOLEAN, defaultValue: false},
