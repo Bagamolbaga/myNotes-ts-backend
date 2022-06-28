@@ -11,6 +11,7 @@ interface UserInstance extends Model {
 
 export interface NoteInstance extends Model {
     id: number
+    uuid: string
     headerImg: string
     title: string
     text: string
@@ -41,6 +42,7 @@ export const User = sequelize.define<UserInstance>('user', {
 
 export const Note = sequelize.define<NoteInstance>('note', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    uuid: {type: DataTypes.STRING(36), allowNull: false},
     headerImg: {type: DataTypes.STRING(500), allowNull: true},
     title: {type: DataTypes.STRING, allowNull: false},
     text: {type: DataTypes.STRING(5000), allowNull: false},

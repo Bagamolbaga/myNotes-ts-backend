@@ -4,8 +4,8 @@ import { INote } from "../models/types"
 
 export const NoteController = {
     create: async (req: Request, res: Response) => {
-        const {headerImg, title, text, tags, group_id, user_id} = req.body
-        const note: INote = await Note.create({headerImg, title, text, tags, user_id, group_id})
+        const {headerImg, title, text, tags, group_id, user_id, uuid} = req.body
+        const note: INote = await Note.create({headerImg, title, text, tags, user_id, group_id, uuid})
         return res.json(note)
     },
 
